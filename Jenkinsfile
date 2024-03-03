@@ -103,7 +103,6 @@ pipeline{
                         sh 'git config --global user.email "chinmayapradhan10000@gmail.com"'
                         sh "git remote set-url origin http://$GITHUB_TOKEN@github.com/chinmaya10000/DevSecOps-Project.git"
                         sh 'git add deployment.yml'
-                        sh 'git reset -- Kubernetes@tmp/'
                         sh 'git commit -am "Updated image version for Build - $VERSION"'
                         sh 'git push origin HEAD:main'
                     }
