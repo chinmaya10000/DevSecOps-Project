@@ -6,9 +6,9 @@ pipeline{
     }
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
-        NAME = "netflix"
+        NAME = 'netflix'
         VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
-        IMAGE_REPO = "chinmayapradhan"
+        IMAGE_REPO = 'chinmayapradhan'
         GITHUB_TOKEN = credentials('github-token')
     }
 
@@ -98,7 +98,8 @@ pipeline{
             steps {
                 script {
                     dir("DevSecOps-Project/Kubernetes") {
-                        sh "git config --global user.email 'jenkins@ci.com'"
+                        sh 'git config --global user.name "jenkins"'
+                        sh 'git config --global user.email "jenkins@ci.com"'
                         sh "git remote set-url origin http://$GITHUB_TOKEN@github.com/chinmaya10000/DevSecOps-Project.git"
                         sh 'git add -A'
                         sh 'git commit -am "Updated image version for Build - $VERSION"'
