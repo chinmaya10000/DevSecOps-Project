@@ -88,7 +88,7 @@ pipeline{
             steps {
                 script {
                     dir("DevSecOps-Project/Kubernetes") {
-                        sh "sed -i 's#image: ${IMAGE_REPO}/${NAME}:.*#image: ${IMAGE_REPO}/${NAME}:${VERSION}#g' deployment.yml"
+                        sh "sed -i 's#^\\s*image: chinmayapradhan/netflix:.*#    image: ${IMAGE_REPO}/${NAME}:${VERSION}#g' deployment.yml"
                         sh 'cat deployment.yml'
                     }
                 }
