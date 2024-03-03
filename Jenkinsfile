@@ -6,9 +6,6 @@ pipeline{
     }
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
-        NAME = 'Netflix'
-        VERSION = "${env.BUILD_NUMBER}-${env.GIT_COMMIT}"
-        IMAGE_REPO = 'chinmayapradhan'
         GITHUB_TOKEN = credentials('github-token')
     }
 
@@ -53,7 +50,7 @@ pipeline{
                 script {
                     echo "build and push the docker image.."
                     withCredentials{[usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]} {
-                        sh "docker build --build-arg TMDB_V3_API_KEY=0ab1a657dfc203653a39a9dd4254b6e8 -t ${IMAGE_REPO}/${NAME}:${VERSION} ."
+                        sh "docker build --build-arg TMDB_V3_API_KEY=0ab1a657dfc203653a39a9dd4254b6e8 -t chinmayapradhan/Netflix:1.0 ."
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh "docker push ${IMAGE_REPO}/${NAME}:${VERSION}"
                     }
