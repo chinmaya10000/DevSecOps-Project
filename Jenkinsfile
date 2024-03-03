@@ -52,7 +52,7 @@ pipeline{
                     withCredentials{[usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]} {
                         sh "docker build --build-arg TMDB_V3_API_KEY=0ab1a657dfc203653a39a9dd4254b6e8 -t chinmayapradhan/Netflix:1.0 ."
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push ${IMAGE_REPO}/${NAME}:${VERSION}"
+                        sh "docker push chinmayapradhan/Netflix:1.0"
                     }
                 }
             }
