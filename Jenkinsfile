@@ -88,7 +88,7 @@ pipeline{
             steps {
                 script {
                     dir("DevSecOps-Project/Kubernetes") {
-                        sh 'sed -i "s#chinmayapradhan.*#${IMAGE_REPO}/${NAME}:${VERSION}#g" deployment.yml'
+                        sh "sed -i 's#image: ${IMAGE_REPO}/${NAME}:.*#image: ${IMAGE_REPO}/${NAME}:${VERSION}#g' deployment.yml"
                         sh 'cat deployment.yml'
                     }
                 }
@@ -102,6 +102,7 @@ pipeline{
                         sh 'git config --global user.email "chinmayapradhan10000@gmail.com"'
                         sh "git remote set-url origin http://$GITHUB_TOKEN@github.com/chinmaya10000/DevSecOps-Project.git"
                         sh 'git add -A'
+                        sh 'git reset -- Kubernetes@tmp/'
                         sh 'git commit -am "Updated image version for Build - $VERSION"'
                         sh 'git push origin HEAD:main'
                     }
