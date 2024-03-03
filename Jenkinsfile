@@ -6,7 +6,7 @@ pipeline{
     }
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
-        NAME = "Netflix"
+        NAME = "netflix"
         VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
         IMAGE_REPO = "chinmayapradhan"
         GITHUB_TOKEN = credentials('github-token')
