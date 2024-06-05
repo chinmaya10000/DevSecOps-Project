@@ -53,7 +53,7 @@ pipeline {
                 script {
                     echo "Build and push image"
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh "docker build -t ${IMAGE_REPO}/${NAME}:${IMAGE_VERSION} ."
+                        sh "docker build --build-arg TMDB_V3_API_KEY=0ab1a657dfc203653a39a9dd4254b6e8 -t ${IMAGE_REPO}/${NAME}:${IMAGE_VERSION} ."
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh "docker push ${IMAGE_REPO}/${NAME}:${IMAGE_VERSION}"
                     }
@@ -67,10 +67,20 @@ pipeline {
                 }
             }
         }
-        stage("deploy") {
+        stage("Push Deployment YAML to GitHub") {
             steps {
                 script {
-                    sh "docker run -d -p 80:80 ${IMAGE_REPO}/${NAME}:${IMAGE_VERSION}"
+                    withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                        sh '''
+                          git config --global user.name "chinmaya1000"
+                          git config --global user.email "chinmayapradhan10000@gmail.com"
+                          git remote set-url origin https://${GITHUB_TOKEN}@github.com/chinmaya10000/DevSecOps-Project.git
+                          sed -i "s#chinmayapradhan.*${IMAGE_REPO}/${NAME}:${IMAGE_VERSION}#g" Kubernetes/deployment.yml
+                          git add Kubernetes/deployment.yml
+                          git commit -m "Updated image version for Build - $IMAGE_VERSION"
+                          git push origin HEAD:main
+                        '''
+                    }
                 }
             }
         }
