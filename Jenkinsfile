@@ -67,5 +67,12 @@ pipeline {
                 }
             }
         }
+        stage("deploy") {
+            steps {
+                script {
+                    sh "docker run -d -p 80:80 ${IMAGE_REPO}/${NAME}:${IMAGE_VERSION}"
+                }
+            }
+        }
     }
 }
