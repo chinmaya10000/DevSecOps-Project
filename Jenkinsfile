@@ -75,7 +75,7 @@ pipeline {
                           git config --global user.name "chinmaya1000"
                           git config --global user.email "chinmayapradhan10000@gmail.com"
                           git remote set-url origin https://${GITHUB_TOKEN}@github.com/chinmaya10000/DevSecOps-Project.git
-                          sed -i "s#chinmayapradhan.*${IMAGE_REPO}/${NAME}:${IMAGE_VERSION}#g" Kubernetes/deployment.yml
+                          sed -i "s#chinmayapradhan.*#${IMAGE_REPO}/${NAME}:${IMAGE_VERSION}#g" Kubernetes/deployment.yml
                           git add Kubernetes/deployment.yml
                           git commit -m "Updated image version for Build - $IMAGE_VERSION"
                           git push origin HEAD:main
