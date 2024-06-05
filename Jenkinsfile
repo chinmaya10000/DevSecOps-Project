@@ -63,7 +63,7 @@ pipeline {
         stage("TRIVY scan") {
             steps {
                 script {
-                    sh "trivy image > ${IMAGE_REPO}/${NAME}:${IMAGE_VERSION}"
+                    sh "trivy image ${IMAGE_REPO}/${NAME}:${IMAGE_VERSION}"
                 }
             }
         }
