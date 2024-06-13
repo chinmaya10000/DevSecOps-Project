@@ -14,8 +14,11 @@ spec:
       labels:
         app: netflix-app
     spec:
+      imagePullSecrets:
+      - name: my-registry-key
       containers:
       - name: netflix-app
         image: chinmayapradhan/netflix:4
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
