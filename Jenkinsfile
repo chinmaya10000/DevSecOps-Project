@@ -48,6 +48,11 @@ pipeline {
                 }
             }
         }
+        stage('TRIVY FS SCAN') {
+            steps {
+                sh "trivy fs . > trivyfs.txt"
+            }
+        }
         stage("Build and Push Image") {
             steps {
                 script {
